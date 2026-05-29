@@ -70,7 +70,7 @@ class Movie(models.Model):
         return self.movie_name
 
 class MovieLanguages(models.Model):
-    model = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE,related_name='movie_languages')
     title = models.CharField(max_length=32)
     video = models.FileField(upload_to='movie_videos/')
 

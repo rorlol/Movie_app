@@ -1,13 +1,15 @@
-from rest_framework import viewsets
+from rest_framework import viewsets,generics
 from .models import UserProfile,Country,Director,Genre,Actor,Movie,MovieLanguages,MovieMoments,Review,Favorite
 from .serializers import (UserProfileSerializers,CountrySerializers,DirectorSerializers,GenreSerializers,
-                          ActorSerializers,MovieSerializers,MovieLanguagesSerializers,MovieMomentsSerializers,
+                          ActorSerializers,MovieListSerializers,MovieDetailSerializers,MovieLanguagesSerializers,MovieMomentsSerializers,
                           ReviewSerializers,FavoriteSerializers)
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
-    queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializers
+
+    def get_queryset(self):
+        return UserProfile.objects.filter(id=self.request.user.id)
 
 class CountryViewSet(viewsets.ModelViewSet):
     queryset = Country.objects.all()
@@ -25,9 +27,13 @@ class ActorViewSet(viewsets.ModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializers
 
-class MovieViewSet(viewsets.ModelViewSet):
+class MovieListViewSet(generics.CreateAPIView):
     queryset = Movie.objects.all()
-    serializer_class = MovieSerializers
+    serializer_class = MovieListSerializers
+
+class MovieDetailViewSet(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Movie.objects.all()
+    serializer_class = MovieDetailSerializers
 
 class MovieLanguagesViewSet(viewsets.ModelViewSet):
     queryset = MovieLanguages.objects.all()
