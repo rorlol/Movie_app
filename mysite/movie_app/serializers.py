@@ -33,6 +33,7 @@ class MovieLanguagesSerializers(serializers.ModelSerializer):
         model = MovieLanguages
         fields = ['id','title','video']
 
+
 class MovieListSerializers(serializers.ModelSerializer):
     #director = DirectorSerializers(many=True)
     country = CountrySerializers(many=True)
@@ -40,29 +41,31 @@ class MovieListSerializers(serializers.ModelSerializer):
         model = Movie
         fields = ['id','movie_image','movie_name','release_date','country']
 
+class ReviewSerializers(serializers.ModelSerializer):
+    user = UserProfileSerializers()
+    movie = MovieListSerializers()
+
+    class Meta:
+        model = Review
+        fields = '__all__'
+
 class MovieDetailSerializers(serializers.ModelSerializer):
     country = CountrySerializers(many=True)
     director = DirectorSerializers(many=True)
     genre = GenreSerializers(many=True)
     actor = ActorSerializers(many=True)
     movie_languages = MovieLanguagesSerializers(read_only=True, many=True)
+    reviews = ReviewSerializers(read_only=True, many=True)
 
     class Meta:
         model = Movie
         fields = ['id','movie_image','movie_trailer','movie_name','release_date','country',
-                  'director','genre','type_quality','movie_time','actor','description','movie_languages']
+                  'director','genre','type_quality','movie_time','actor','description','movie_languages',
+                  'reviews']
 
 class MovieMomentsSerializers(serializers.ModelSerializer):
     class Meta:
         model = MovieMoments
-        fields = '__all__'
-
-class ReviewSerializers(serializers.ModelSerializer):
-    user = UserProfileSerializers()
-    movie = MovieSerializers()
-
-    class Meta:
-        model = Review
         fields = '__all__'
 
 class FavoriteSerializers(serializers.ModelSerializer):

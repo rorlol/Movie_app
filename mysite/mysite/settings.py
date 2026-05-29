@@ -41,8 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movie_app',
+    'rest_framework_swagger',
     'rest_framework',
     "phonenumber_field",
+    'django_filters',
+    'drf_yasg',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -127,3 +131,9 @@ MEDIA_URL = '/media/'
 
 
 AUTH_USER_MODEL = 'movie_app.UserProfile'
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}

@@ -81,7 +81,7 @@ class MovieMoments(models.Model):
 
 class Review(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE,related_name='reviews')
     comment = models.TextField(null=True, blank=True)
     stars = models.PositiveSmallIntegerField(choices=[(i,str (i)) for i in range(1,11)], null=True, blank=True)
 
